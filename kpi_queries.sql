@@ -1,0 +1,69 @@
+\\KPI 1: Order Lead Time (gesamter Prozess)
+SELECT 
+    order_id,
+    MIN(status_date) AS start_date,
+    MAX(status_date) AS end_date,
+    JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date)) AS lead_time_days
+FROM order_status_history
+GROUP BY order_id;
+
+\\KPI 2: Average Lead Time (Business Overview)
+  SELECT 
+    AVG(JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date))) AS avg_lead_time
+FROM order_status_history
+GROUP BY order_id;
+
+SELECT 
+    AVG(JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) AS avg_delivery_time
+FROM shipments
+WHERE delivery_date IS NOT NULL;
+
+\\KPI 3: Delivery Time (Shipping Performance)
+
+SELECT 
+    AVG(JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) AS avg_delivery_time
+FROM shipments
+WHERE delivery_date IS NOT NULL;
+
+\\KPI 4: Open Orders (Pipeline Status)
+SELECT 
+    status,
+    COUNT(*) AS total_orders
+FROM orders
+GROUP BY status;
+
+\\KPI 5: Bottleneck Analysis (Process Delay)
+SELECT 
+    status,
+    COUNT(*) AS occurrences
+FROM order_status_history
+GROUP BY status
+ORDER BY occurrences DESC;
+
+\\KPI 6: Delayed Shipments
+SELECT 
+    shipment_id,
+    order_id,
+    JULIANDAY(delivery_date) - JULIANDAY(shipped_date) AS delay_days
+FROM shipments
+WHERE delivery_date IS NOT NULL
+  AND (JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) > 2;
+
+KPI 7: Missing Customer Data (Data Quality KPI)
+SELECT 
+    COUNT(*) AS missing_email
+FROM customers
+WHERE email IS NULL;
+
+SELECT 
+    COUNT(*) AS missing_city
+FROM customers
+WHERE city IS NULL;
+
+\\KPI 8: Customer Segments Overview
+SELECT 
+    customer_segment,
+    COUNT(*) AS total_customers
+FROM customers
+GROUP BY customer_segment;
+
