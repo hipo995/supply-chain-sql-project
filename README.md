@@ -1,1 +1,0 @@
-# supply-chain-sql-project
