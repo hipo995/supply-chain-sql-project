@@ -1,0 +1,45 @@
+ PERFORMANCE IMPROVEMENT: INDEXING STRATEGY
+       Supply Chain KPI Optimization
+
+
+ 1. Index für schnelle Order Aggregation
+CREATE INDEX idx_order_status_history_order_id 
+ON order_status_history(order_id);
+
+ 2. Index für Datumsfilter und Aggregationen
+CREATE INDEX idx_order_status_history_status_date 
+ON order_status_history(status_date);
+
+ 3. Index für Shipment Lookups
+CREATE INDEX idx_shipments_order_id 
+ON shipments(order_id);
+
+ 4. Composite Index 
+CREATE INDEX idx_order_status_history_order_date 
+ON order_status_history(order_id, status_date);
+
+
+ QUERY OPTIMIZATION TEST
+
+
+ KPI 1 Optimized Query
+SELECT 
+    order_id,
+    MIN(status_date) AS start_date,
+    MAX(status_date) AS end_date,
+    JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date)) AS lead_time_days
+FROM order_status_history
+GROUP BY order_id;
+
+
+ PERFORMANCE ANALYSIS
+
+
+   Use this to check performance
+EXPLAIN QUERY PLAN
+SELECT 
+    order_id,
+    MIN(status_date),
+    MAX(status_date)
+FROM order_status_history
+GROUP BY order_id;
