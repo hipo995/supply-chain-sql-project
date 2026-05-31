@@ -27,6 +27,12 @@ CREATE TABLE order_status_history (
     status VARCHAR(50),
     status_date DATE
 );
+CREATE TABLE fact_orders (
+    order_id INT,
+    customer_id INT,
+    order_date DATE,
+    status VARCHAR(50)
+);
 
 Dimension Tables
 
@@ -36,6 +42,8 @@ CREATE TABLE dim_customer (
     customer_key INT PRIMARY KEY,
     customer_id INT,
     name VARCHAR(100),
+
+
     country VARCHAR(50),
     city VARCHAR(50),
     segment VARCHAR(10),
