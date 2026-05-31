@@ -35,6 +35,14 @@ INSERT INTO order_status_history VALUES
 (3, 101, 'Shipped', '2024-01-04'),
 (4, 101, 'Delivered', '2024-01-06');
 
+INSERT INTO fact_orders (order_id, customer_id, order_date, status)
+SELECT 
+    order_id,
+    customer_id,
+    order_date,
+    status
+FROM orders;
+
 INSERT INTO dim_customer
 SELECT
     customer_id,
