@@ -1,3 +1,4 @@
+🔵 SOURCE LAYER (RAW)
 INSERT INTO customers VALUES
 (1, 'Anna Müller', 'Germany'),
 (2, 'Max Schmidt', 'Germany'),
@@ -35,13 +36,7 @@ INSERT INTO order_status_history VALUES
 (3, 101, 'Shipped', '2024-01-04'),
 (4, 101, 'Delivered', '2024-01-06');
 
-INSERT INTO fact_orders (order_id, customer_id, order_date, status)
-SELECT 
-    order_id,
-    customer_id,
-    order_date,
-    status
-FROM orders;
+🟢 DIMENSION LAYER
 
 INSERT INTO dim_customer
 SELECT
@@ -69,3 +64,12 @@ SELECT
         ELSE delivery_date - shipped_date
     END
 FROM shipments;
+
+🔴 FACT LAYER
+INSERT INTO fact_orders (order_id, customer_id, order_date, status)
+SELECT 
+    order_id,
+    customer_id,
+    order_date,
+    status
+FROM orders;
