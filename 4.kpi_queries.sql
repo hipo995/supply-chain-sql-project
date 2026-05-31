@@ -9,14 +9,14 @@ GROUP BY order_id;
 
 \\KPI 2: Average Lead Time (Business Overview)
   SELECT 
-    AVG(JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date))) AS avg_lead_time
-FROM order_status_history
-GROUP BY order_id;
-
-SELECT 
-    AVG(JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) AS avg_delivery_time
-FROM shipments
-WHERE delivery_date IS NOT NULL;
+    AVG(lead_time_days) AS avg_lead_time
+FROM (
+    SELECT 
+        order_id,
+        JULIANDAY(MAX(status_date)) - JULIANDAY(MIN(status_date)) AS lead_time_days
+    FROM order_status_history
+    GROUP BY order_id
+);
 
 \\KPI 3: Delivery Time (Shipping Performance)
 
@@ -44,10 +44,10 @@ ORDER BY occurrences DESC;
 SELECT 
     shipment_id,
     order_id,
-    JULIANDAY(delivery_date) - JULIANDAY(shipped_date) AS delay_days
+    JULIANDAY(delivery_date) - JULIANDAY(shipped_date) AS delivery_days
 FROM shipments
 WHERE delivery_date IS NOT NULL
-  AND (JULIANDAY(delivery_date) - JULIANDAY(shipped_date)) > 2;
+  AND JULIANDAY(delivery_date) - JULIANDAY(shipped_date) > 2;
 
 KPI 7: Missing Customer Data (Data Quality KPI)
 SELECT 
