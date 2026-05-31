@@ -34,3 +34,30 @@ INSERT INTO order_status_history VALUES
 (2, 101, 'Processing', '2024-01-02'),
 (3, 101, 'Shipped', '2024-01-04'),
 (4, 101, 'Delivered', '2024-01-06');
+
+INSERT INTO dim_customer
+SELECT
+    customer_id,
+    customer_id,
+    name,
+    country,
+    city,
+    segment,
+    email,
+    CASE 
+        WHEN phone IS NULL THEN 0
+        ELSE 1
+    END,
+    signup_date
+FROM customers;
+
+INSERT INTO dim_shipment
+SELECT
+    shipment_id,
+    shipped_date,
+    delivery_date,
+    CASE 
+        WHEN delivery_date IS NULL THEN NULL
+        ELSE delivery_date - shipped_date
+    END
+FROM shipments;
