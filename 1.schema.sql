@@ -1,5 +1,5 @@
 
-Fact Tables
+Fact Tables 🔵 SOURCE LAYER 
 
 CREATE TABLE customers (
     customer_id INT PRIMARY KEY,
@@ -27,14 +27,9 @@ CREATE TABLE order_status_history (
     status VARCHAR(50),
     status_date DATE
 );
-CREATE TABLE fact_orders (
-    order_id INT,
-    customer_id INT,
-    order_date DATE,
-    status VARCHAR(50)
-);
 
-Dimension Tables
+
+Dimension Tables 🟢 DIMENSION LAYER
 
 1. dim_customer (erste Dimension)
 
@@ -51,6 +46,7 @@ CREATE TABLE dim_customer (
     has_phone INT,
     signup_date DATE
 );
+
 
 2. dim_date
 CREATE TABLE dim_date (
@@ -70,9 +66,18 @@ CREATE TABLE dim_shipment (
 );
 4. dim_order_status
 CREATE TABLE dim_order_status (
-    status_key INT PRIMARY KEY,
+    status_key INT PRIMARY KEY, 
+    status VARCHAR(50) 
+    
+🔴 FACT LAYER
+    CREATE TABLE fact_orders (
+    order_id INT,
+    customer_id INT,
+    order_date DATE,
     status VARCHAR(50)
 );
+
+
 
 
 
