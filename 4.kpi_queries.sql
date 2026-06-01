@@ -67,3 +67,26 @@ SELECT
 FROM customers
 GROUP BY customer_segment;
 
+\\KPI 9:  Top Produkte
+SELECT
+    product_id,
+    SUM(revenue) AS total_revenue
+FROM fact_order_items
+GROUP BY product_id
+ORDER BY total_revenue DESC; 
+
+ \\KPI 10: Window Function Version 
+SELECT *,
+SUM(revenue) OVER (PARTITION BY product_id) AS total_revenue_per_product
+FROM fact_order_items;
+
+ \\KPI 11: Ranking Produkte 
+SELECT *,
+RANK() OVER (ORDER BY revenue DESC) AS product_rank
+FROM fact_order_items;
+
+  \\KPI 10: Customer Value
+SELECT
+    order_id,
+    SUM(revenue) OVER (PARTITION BY order_id) AS order_total
+FROM fact_order_items;
