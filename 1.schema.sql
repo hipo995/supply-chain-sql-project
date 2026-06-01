@@ -68,15 +68,33 @@ CREATE TABLE dim_shipment (
 CREATE TABLE dim_order_status (
     status_key INT PRIMARY KEY, 
     status VARCHAR(50) 
+
+5.dim_product (Produktdimension)
+    CREATE TABLE dim_product (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    brand VARCHAR(50),
+    cost_price DECIMAL(10,2)
+);
     
 🔴 FACT LAYER
+fact_orders
     CREATE TABLE fact_orders (
     order_id INT,
     customer_id INT,
     order_date DATE,
     status VARCHAR(50)
 );
-
+fact_order_items
+ CREATE TABLE fact_order_items (
+    order_item_id INT PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    revenue DECIMAL(10,2)
+);
 
 
 
