@@ -65,6 +65,19 @@ SELECT
     END
 FROM shipments;
 
+
+INSERT INTO dim_product (product_id, product_name, category, brand, cost_price) VALUES
+(1, 'iPhone 14', 'Electronics', 'Apple', 799.00),
+(2, 'Galaxy S23', 'Electronics', 'Samsung', 699.00),
+(3, 'MacBook Air M2', 'Computers', 'Apple', 999.00),
+(4, 'ThinkPad X1 Carbon', 'Computers', 'Lenovo', 1200.00),
+(5, 'AirPods Pro', 'Accessories', 'Apple', 199.00),
+(6, 'Sony WH-1000XM5', 'Accessories', 'Sony', 349.00),
+(7, 'Nike Air Max 270', 'Footwear', 'Nike', 150.00),
+(8, 'Adidas Ultraboost', 'Footwear', 'Adidas', 180.00),
+(9, 'Instant Pot Duo', 'Home Appliances', 'Instant Pot', 89.00),
+(10, 'Dyson V11 Vacuum', 'Home Appliances', 'Dyson', 599.00);
+
 INSERT INTO dim_date
 SELECT
     date('2024-01-01', '+' || n || ' day') AS date_key,
