@@ -90,3 +90,10 @@ SELECT
     order_id,
     SUM(revenue) OVER (PARTITION BY order_id) AS order_total
 FROM fact_order_items;
+
+\\KPI 11= Revenue Per Category 
+select category , sum (cost_price) As [Revenue Per category] 
+From dim_product
+GROUP By category
+HAVING sum (cost_price) > 100
+ORDER By  sum (cost_price) > 100 DESC ;
